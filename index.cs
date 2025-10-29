@@ -11,11 +11,11 @@ try
   var settings = await LoadSettingsAsync();
   var tokenResponse = await GetTokenResponseAsync(settings);
   var viewerCount = await GetLiveViewerCountAsync(tokenResponse);
-  Console.WriteLine(viewerCount);
+  Console.Write(viewerCount);
 }
 catch (Exception ex)
 {
-  Console.WriteLine(ex.Message);
+  Console.Write(ex.Message);
 }
 
 #region Methods
