@@ -42,7 +42,7 @@ static async Task<int> GetLiveViewerCountAsync(TokenResponse tokenResponse)
 
   if (ytResponse is null || ytResponse.Items.Length is 0)
   {
-    throw new Exception(string.Empty);
+    return -1;
   }
 
   return ytResponse.Items[0].Stats.Viewers;
