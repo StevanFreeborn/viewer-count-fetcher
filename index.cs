@@ -50,7 +50,7 @@ static async Task<int> GetLiveViewerCountAsync(TokenResponse tokenResponse)
 
 static async Task<TokenResponse> GetTokenResponseAsync(Settings settings)
 {
-  var tokenResponsePath = Path.Combine(Directory.GetCurrentDirectory(), "tokenResponse.json");
+  var tokenResponsePath = Path.Combine(GetEntryPointDirectory(), "tokenResponse.json");
 
   if (File.Exists(tokenResponsePath) is false)
   {
@@ -75,7 +75,7 @@ static async Task<TokenResponse> GetTokenResponseAsync(Settings settings)
 
 static async Task<Settings> LoadSettingsAsync()
 {
-  var settingsPath = Path.Combine(Directory.GetCurrentDirectory(), "appsettings.json");
+  var settingsPath = Path.Combine(GetEntryPointDirectory(), "appsettings.json");
   var settingsContent = await File.ReadAllTextAsync(settingsPath);
   var settings = JsonSerializer.Deserialize(settingsContent, JsonContext.Default.Settings);
 
@@ -202,6 +202,11 @@ static async Task<TokenResponse> GetTokenAsync(string? code, Settings settings)
 
   var token = JsonSerializer.Deserialize(tokenResponseContent, JsonContext.Default.TokenResponse) ?? throw new Exception("Failed to parse OAuth token");
   return token.WithExpiresAt();
+}
+
+static string GetEntryPointDirectory()
+{
+  return (string)AppContext.GetData("EntryPointFileDirectoryPath")!;
 }
 
 #endregion
